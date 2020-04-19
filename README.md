@@ -24,10 +24,6 @@
 
 ![阿里云OSS操作流程图](https://yufire.oss-cn-shanghai.aliyuncs.com/image/2a65eb26-3d44-4e1d-b94b-5e5710aa3dba1587212154718.png)
 
-## 主页图片
-
-![主页示例](https://yufire.oss-cn-shanghai.aliyuncs.com/image/de947535-7c1f-46d9-853a-3faca521afd01587213438398.png)
-
 ## 需要环境
 
 - 开发工具：Intellij IDEA 、MyEclipse 等...
@@ -69,6 +65,6 @@
 
 ![1587284421176](https://yufire.oss-cn-shanghai.aliyuncs.com/image/cf2b389d-f658-4b50-8994-2ee73369d5411587284515250.png)
 
-# 效果
+# demo主页效果
 
-![1587284536005](https://yufire.oss-cn-shanghai.aliyuncs.com/image/036cd9f9-514c-4ca0-80ae-81ef4c5af2601587284541946.png)
+![主页效果](https://yufire.oss-cn-shanghai.aliyuncs.com/image/036cd9f9-514c-4ca0-80ae-81ef4c5af2601587284541946.png)
