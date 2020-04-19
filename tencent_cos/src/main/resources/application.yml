@@ -1,0 +1,8 @@
+tencent:
+  oss:
+    secretId:  xxx # 你的secretId
+    secretKey: xxx # 你的secretKey
+    region: xxx # 你的cos地域节点  比如 ap-shanghai
+    bucketName: xxx # 你的bucket名称 格式 bucketName + appid
+    url:   xxx # 你的cos节点访问域名 cos.ap-shanghai.myqcloud.com/ 记得加 /
+    filedir: # 文件存储目录 默认为根

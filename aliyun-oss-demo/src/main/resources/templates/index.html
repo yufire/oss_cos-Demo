@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传测试</title>
+</head>
+<link href="https://www.layuicdn.com/layui-v2.5.6/css/layui.css" rel="stylesheet">
+<script src="https://www.layuicdn.com/layui-v2.5.6/layui.js"></script>
+<style>
+    progress {
+        width: 100%;
+        height: 20px;
+        color: #f00;
+        background: #ccd9c7;;
+        border-radius: 0.1rem;
+    }
+
+    /* 表示总长度背景色 */
+    progress::-webkit-progress-bar {
+        background: #b4b4b4;
+        border-radius: 0.2rem;
+    }
+
+    /* 表示已完成进度背景色 */
+    progress::-webkit-progress-value {
+        background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+        border-radius: 0.2rem;
+    }
+</style>
+<body>
+<blockquote class="layui-elem-quote">该demo由 <span style="color: red">yufire</span> 编写 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="#">邮箱 ：yufirem@vip.qq.com</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.github.com/yufire">查看我的更多demo <span class="layui-icon" style="color: red">&#xe756;</span></a></blockquote>
+<div style="text-align: center;border: 1px solid #000;margin: 150px;padding: 10px">
+    <h1 align="left">原生ajax上传</h1>
+    <input type="file" name="file" onchange="upload();"/>
+    <div style="width: auto;">
+        <br/>
+        <progress value="0" max="100"></progress>
+        <span style="position: relative;bottom: 17px;" id="ywc">0</span><span
+            style="position: relative;bottom: 17px;">%</span>
+    </div>
+    <img id="uploadImgAjax" style="display: none" src="" width="300" height="155" alt="">
+</div>
+
+<div style="text-align: center;border: 1px solid #000;margin: 150px;padding: 10px">
+    <h1 align="left">Layui单文件上传</h1>
+    <button type="button" class="layui-btn" id="test1">
+        <i class="layui-icon">&#xe67c;</i>上传图片
+    </button>
+    <div style="width: auto;margin-top: 2px" class="layui-progress layui-progress-big" lay-showpercent="true"
+         lay-filter="demo">
+        <div class="layui-progress-bar layui-bg-red" lay-percent="0%"></div>
+    </div>
+    <img id="uploadImgLayui" style="display: none" src="" width="300" height="155" alt="">
+</div>
+</body>
+</html>
+<script>
+    /**
+     * 原生 Ajax
+     */
+    function upload() {
+        var pic = document.getElementsByTagName('input')[0].files[0];
+        var fd = new FormData();
+        var xhr = new XMLHttpRequest();
+        xhr.open('post', '/upload', true);
+
+        xhr.onreadystatechange = function () {
+            //readystate为4表示请求已完成并就绪
+            if (this.readyState == 4) {
+                showImg("uploadImgAjax", JSON.parse(this.responseText).url)
+            }
+        }
+
+        xhr.upload.onprogress = function (ev) {
+            //如果ev.lengthComputable为true就可以开始计算上传进度
+            //上传进度 = 100* ev.loaded/ev.total
+            if (ev.lengthComputable) {
+                var precent = 100 * ev.loaded / ev.total;
+                //更改进度条，及百分比
+                jdt(precent.toString().substring(0, 4));
+            }
+        }
+        fd.append('file', pic);
+
+        xhr.send(fd);
+
+    }
+
+    /**
+     * Layui
+     */
+    layui.use(['upload', 'element'], function () {
+        var upload = layui.upload, element = layui.element;
+
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#test1' //绑定元素
+            , url: '/upload/' //上传接口
+            , field: "file" // 上传字段名
+            , done: function (res) {
+                showImg("uploadImgLayui", res.url);
+            }
+            , error: function () {
+                //请求异常回调
+            }, progress: function (n, elem) {
+                // 上传进度条 回调
+                var percent = n //获取进度百分比
+                element.progress('demo', n + '%')
+            }
+        });
+    });
+
+    function jdt(value) {
+        document.getElementById("ywc").innerHTML = value;
+        document.getElementsByTagName("progress")[0].setAttribute("value", value);
+    }
+
+    function showImg(id,url) {
+
+        console.log(document.getElementById(id));
+
+        document.getElementById(id).setAttribute("src", url);
+        document.getElementById(id).style.display = "block";
+    }
+</script>
